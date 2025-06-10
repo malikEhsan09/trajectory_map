@@ -17,7 +17,7 @@
             <meta name="viewport" content="width=device-width,
                 initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
             <style>
-                #map_82f896ad8f64127183a7806d31e4b1b2 {
+                #map_0f4b5389c63a34fe8a01ee615983468e {
                     position: relative;
                     width: 100.0%;
                     height: 100.0%;
@@ -54,56 +54,35 @@
 <body>
     
     
+        <script src="qrc:///qtwebchannel/qwebchannel.js"></script>
         <script>
-        function setupMapClicks() {
-            // Wait for map to be fully loaded
-            if (typeof window.map === 'undefined') {
-                setTimeout(setupMapClicks, 100);
-                return;
-            }
-            
-            // Remove any existing click handlers
-            window.map.off('click');
-            
-            // Add click handler
-            window.map.on('click', function(e) {
-                // Send click to Python immediately
-                if (typeof qt !== 'undefined' && qt.webChannelTransport) {
-                    new QWebChannel(qt.webChannelTransport, function(channel) {
-                        var handler = channel.objects.mapHandler;
-                        if (handler && handler.on_map_click) {
-                            handler.on_map_click(e.latlng.lat, e.latlng.lng);
-                        }
+        document.addEventListener("DOMContentLoaded", function () {
+            new QWebChannel(qt.webChannelTransport, function (channel) {
+                let handler = channel.objects.handler;
+                if (typeof map !== 'undefined') {
+                    map.on('click', function(e) {
+                        handler.onMapClick(e.latlng.lat, e.latlng.lng);
                     });
+                    map.getContainer().style.cursor = 'crosshair';
                 }
             });
-            
-            // Set cursor style
-            window.map.getContainer().style.cursor = 'crosshair';
-        }
-        
-        // Initialize when DOM is ready
-        if (document.readyState === 'loading') {
-            document.addEventListener('DOMContentLoaded', setupMapClicks);
-        } else {
-            setupMapClicks();
-        }
+        });
         </script>
         
     
-            <div class="folium-map" id="map_82f896ad8f64127183a7806d31e4b1b2" ></div>
+            <div class="folium-map" id="map_0f4b5389c63a34fe8a01ee615983468e" ></div>
         
 </body>
 <script>
     
     
-            var map_82f896ad8f64127183a7806d31e4b1b2 = L.map(
-                "map_82f896ad8f64127183a7806d31e4b1b2",
+            var map_0f4b5389c63a34fe8a01ee615983468e = L.map(
+                "map_0f4b5389c63a34fe8a01ee615983468e",
                 {
-                    center: [10.29, 12.26],
+                    center: [40.7128, -74.006],
                     crs: L.CRS.EPSG3857,
                     ...{
-  "zoom": 15,
+  "zoom": 12,
   "zoomControl": true,
   "preferCanvas": false,
 }
@@ -115,7 +94,7 @@
 
         
     
-            var tile_layer_723cff9431ecf2505625ff1f5c3b18ac = L.tileLayer(
+            var tile_layer_c0e8c849489b78cb457612a4ff95ed47 = L.tileLayer(
                 "https://tile.openstreetmap.org/{z}/{x}/{y}.png",
                 {
   "minZoom": 0,
@@ -132,40 +111,7 @@
             );
         
     
-            tile_layer_723cff9431ecf2505625ff1f5c3b18ac.addTo(map_82f896ad8f64127183a7806d31e4b1b2);
-        
-    
-            var circle_marker_adaf4fac7c775ad6744aebf3db509299 = L.circleMarker(
-                [10.29, 12.26],
-                {"bubblingMouseEvents": true, "color": "#FF6600", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#FF6600", "fillOpacity": 1.0, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 8, "stroke": true, "weight": 3}
-            ).addTo(map_82f896ad8f64127183a7806d31e4b1b2);
-        
-    
-        var popup_b2d8e68ab3cec21b53e72f397f92f8fc = L.popup({
-  "maxWidth": "100%",
-});
-
-        
-            
-                var html_fbd65a8f24ae67ac61f786c4c0f7c5f5 = $(`<div id="html_fbd65a8f24ae67ac61f786c4c0f7c5f5" style="width: 100.0%; height: 100.0%;">Current Point 1<br>Lat: 10.290000<br>Lng: 12.260000</div>`)[0];
-                popup_b2d8e68ab3cec21b53e72f397f92f8fc.setContent(html_fbd65a8f24ae67ac61f786c4c0f7c5f5);
-            
-        
-
-        circle_marker_adaf4fac7c775ad6744aebf3db509299.bindPopup(popup_b2d8e68ab3cec21b53e72f397f92f8fc)
-        ;
-
-        
-    
-    
-            circle_marker_adaf4fac7c775ad6744aebf3db509299.bindTooltip(
-                `<div>
-                     Current Point 1
-                 </div>`,
-                {
-  "sticky": true,
-}
-            );
+            tile_layer_c0e8c849489b78cb457612a4ff95ed47.addTo(map_0f4b5389c63a34fe8a01ee615983468e);
         
 </script>
 </html>
